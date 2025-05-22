@@ -87,7 +87,7 @@ const Login = () => {
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Your Name"
+                      placeholder="First Name"
                       className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
                     />
                   </div>

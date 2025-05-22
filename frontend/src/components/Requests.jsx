@@ -54,7 +54,7 @@ const Requests = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {requests.map((request) => {
           const { _id, firstName, lastName, photoUrl, age, gender, about } =
-            request.fromUserId;
+            request.senderId;
 
           return (
             <div

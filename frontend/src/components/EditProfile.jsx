@@ -13,6 +13,7 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
   const [error, setError] = useState("");
+  
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
