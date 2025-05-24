@@ -7,7 +7,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://devtinder-3-frontend.onrender.com",
     credentials: true,
   })
 ); // to allow cross-origin requests
