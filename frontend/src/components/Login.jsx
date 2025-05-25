@@ -24,20 +24,13 @@ const Login = () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
+        { emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data));
-
-      setTimeout(() => {
-        navigate("/feed");
-      }, 0);
+      navigate("/feed");
     } catch (err) {
       setErrorMessage(err?.response?.data?.message || "Something went wrong");
-      console.error(err);
     }
   };
 
@@ -50,164 +43,139 @@ const Login = () => {
         { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
-      return navigate("/feed");
+      navigate("/feed");
     } catch (err) {
       setErrorMessage(err?.response?.data?.message || "Something went wrong");
-      console.error(err);
     }
   };
 
   return (
-    <div className="flex flex-wrap">
-      <div className="flex w-full flex-col md:w-1/2 bg-base-200">
-        <div className="lg:w-[28rem] mx-auto my-auto flex flex-col justify-center pt-16 md:justify-start md:px-6 md:pt-16 mt-6">
-          <div>
-            {isLoginForm ? (
-              <p className="text-left text-3xl font-bold">
-                Welcome 🙏, DevTinder
-              </p>
-            ) : (
-              <p className="text-left text-3xl font-bold">Register</p>
-            )}
-          </div>
-
-          <p className="mt-2 text-left text-gray-500">
-            Welcome back, please enter your details.
+    <div className="flex min-h-screen w-full bg-gray-100">
+      {/* Left Side Form */}
+      <div className="flex w-full md:w-1/2 justify-center items-center">
+        <div className="bg-white p-10 rounded-xl shadow-md w-full max-w-md">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            {isLoginForm ? "Welcome 🙏, CodeCrew" : "Create an Account"}
+          </h2>
+          <p className="text-gray-500 mb-6">
+            {isLoginForm ? "Please login to continue." : "Please fill the form to register."}
           </p>
 
-          <div className="flex flex-col pt-3 md:pt-8">
-            {/* SignUp Form */}
-            {!isLoginForm && (
-              <>
-                <div className="grid gap-3 md:grid-cols-2">
-                  {/* First Name */}
-                  <div>
-                    <label>First Name</label>
-                    <input
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="First Name"
-                      className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
-                    />
-                  </div>
-                  {/* Last Name */}
-                  <div>
-                    <label>Last Name</label>
-                    <input
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Last Name"
-                      className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
-                    />
-                  </div>
-
-                  {/* Gender */}
-                  <div>
-                    <label>Gender</label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Others</option>
-                    </select>
-                  </div>
-
-                  {/* Age */}
-                  <div>
-                    <label>Age</label>
-                    <input
-                      type="text"
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      placeholder="Enter your age"
-                      className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* Login form */}
-            <div>
-              <div className="flex flex-col pt-4">
-                <label>Email</label>
-                <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
-                  <input
-                    type="email"
-                    value={emailId}
-                    onChange={(e) => setEmailId(e.target.value)}
-                    id="login-email"
-                    className="w-full flex-1 appearance-none border-gray-300 bg-base-100 px-4 py-2 text-base text-white placeholder-gray-400 focus:outline-none"
-                    placeholder="Email"
-                  />
-                </div>
+          {/* SignUp Fields */}
+          {!isLoginForm && (
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="text-sm font-medium">First Name</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+                  placeholder="First Name"
+                />
               </div>
-              <div className="mb-12 flex flex-col pt-4">
-                <label>Password</label>
-                <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="login-password"
-                    className="w-full flex-1 appearance-none border-gray-300 bg-base-100 px-4 py-2 text-base text-white placeholder-gray-400 focus:outline-none"
-                    placeholder="Password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 text-gray-500"
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </button>
-                </div>
+              <div>
+                <label className="text-sm font-medium">Last Name</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+                  placeholder="Last Name"
+                />
               </div>
-              {errorMessage && (
-                <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
-              )}
+              <div>
+                <label className="text-sm font-medium">Gender</label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium">Age</label>
+                <input
+                  type="text"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+                  placeholder="Your Age"
+                />
+              </div>
             </div>
+          )}
 
+          {/* Common Fields */}
+          <div className="mb-4">
+            <label className="text-sm font-medium">Email</label>
+            <input
+              type="email"
+              value={emailId}
+              onChange={(e) => setEmailId(e.target.value)}
+              className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+              placeholder="Email"
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label className="text-sm font-medium">Password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full px-3 py-2 rounded-md bg-gray-100 focus:outline-none text-black"
+              placeholder="Password"
+            />
             <button
-              onClick={isLoginForm ? handleLogin : handleSignUp}
-              className="w-full rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2"
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-9 text-sm text-blue-600 hover:underline"
             >
-              {isLoginForm ? "Login" : "Sign Up"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
 
-          <div className="py-12 text-center">
-            <p className="whitespace-nowrap text-gray-500">
-              {isLoginForm ? "Don't have an account? " : "Existing User? "}
-              <span
-                className="underline-offset-4 md:mx-2 font-semibold text-gray-200 underline cursor-pointer"
-                onClick={() => setIsLoginForm(!isLoginForm)}
-              >
-                {isLoginForm ? "Sign up for free." : "Login Here"}
-              </span>
-            </p>
+          {errorMessage && (
+            <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
+          )}
+
+          <button
+            onClick={isLoginForm ? handleLogin : handleSignUp}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold transition"
+          >
+            {isLoginForm ? "Login" : "Sign Up"}
+          </button>
+
+          <div className="mt-6 text-center text-sm text-gray-600">
+            {isLoginForm ? "Don't have an account?" : "Already have an account?"}
+            <span
+              className="ml-1 font-medium text-blue-600 cursor-pointer hover:underline"
+              onClick={() => setIsLoginForm(!isLoginForm)}
+            >
+              {isLoginForm ? "Sign up" : "Login"}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Right Side image */}
-      <div className="pointer-events-none relative hidden h-screen select-none md:block md:w-1/2">
+      {/* Right Side Image */}
+      <div className="hidden md:flex w-1/2 h-screen">
         <img
-          className="-z-1 absolute top-2 h-full w-full object-cover object-center opacity-90"
           src={
             isLoginForm
               ? "https://i.pinimg.com/originals/06/aa/40/06aa408f09f394c3b46d6cbe1efad944.gif"
               : "https://i.pinimg.com/originals/a4/07/22/a4072206392b57e4b3ede6588e81d7f3.gif"
           }
-          alt="Background"
+          alt="Login Graphic"
+          className="w-full h-full object-cover"
         />
       </div>
     </div>
   );
 };
+
 export default Login;

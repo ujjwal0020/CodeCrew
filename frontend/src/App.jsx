@@ -9,6 +9,10 @@ import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Home from "./components/Home";
 import Chat from "./components/Chat";
+import Termsofuse from "./components/Termsofuse";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import WhyChoose from "./components/WhyChoose";
 
 function App() {
   return (
@@ -24,6 +28,10 @@ function App() {
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
               <Route path="/chat/:targetUserId" element={<Chat/>}/>
+               <Route path="/termsofuse" element={<Termsofuse />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/whychoose" element={<WhyChoose />} />
             </Route>
           </Routes>
         </BrowserRouter>

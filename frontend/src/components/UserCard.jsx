@@ -5,78 +5,71 @@ import { removeUserFromFeed } from "../utils/feedSlice";
 
 const UserCard = ({ user }) => {
   if (!user) return null;
-  const { _id, firstName, lastName, photoUrl, age, skills, gender, about } =
-    user;
+  const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
   const dispatch = useDispatch();
 
   const handleSendRequest = async (status, userId) => {
     if (!userId) return;
     try {
-      const res = await axios.post(
-        BASE_URL + "/request/send/" + status + "/" + userId,
+      await axios.post(
+        `${BASE_URL}/request/send/${status}/${userId}`,
         {},
         { withCredentials: true }
       );
       dispatch(removeUserFromFeed(userId));
-    } catch (err) {}
+    } catch (err) {
+      // handle error if needed
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="card w-screen md:w-[25vw] h-screen md:h-[38vw] rounded-2xl shadow-2xl relative overflow-hidden bg-base-300">
-        <figure className="relative h-screen w-screen md:w-full md:h-full">
-          {/* User Image */}
+    <div className="flex justify-center items-center min-h-[70vh] w-full p-4">
+      <div className="card relative w-full max-w-xs rounded-2xl shadow-2xl overflow-hidden bg-base-300 flex flex-col">
+        {/* Image container with fixed aspect ratio and limited height */}
+        <figure className="relative w-full aspect-[3/4] max-h-[400px]">
           <img
-            className="w-full h-full object-cover opacity-90"
             src={photoUrl}
             alt={`${firstName} ${lastName}`}
+            className="w-full h-full object-cover opacity-90"
           />
 
-          {/* User Details */}
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent py-2 px-2">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-75 rounded-lg"></div>
-
-              {/* User Name */}
-              {firstName && lastName && (
-                <h1 className="relative text-3xl w-full px-2 mt-2 font-bold text-white drop-shadow-md">
-                  {firstName} {lastName}
-                </h1>
-              )}
-
-              {/* About */}
-              {about && (
-                <h3 className="relative text-sm px-2 mt-1 font-medium text-white drop-shadow-md">
-                  {about}
-                </h3>
-              )}
-
-              {/* Age & Gender */}
-              {(age || gender) && (
-                <h5 className="relative text-sm px-2 mt-1 flex justify-between font-medium text-white drop-shadow-md">
-                  🎂 {age} {gender ? `, 🧑‍🤝‍🧑 ${gender.toUpperCase()}` : ""} 🕓
-                  Active few hours ago
-                </h5>
-              )}
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="absolute bottom-50 left-1/2 transform -translate-x-1/2 flex gap-10">
-            <button
-              onClick={() => handleSendRequest("ignored", _id)}
-              className="text-center cursor-pointer flex items-center justify-center w-16 h-16 text-3xl text-black rounded-full bg-white shadow-xl hover:scale-110 transition-transform"
-            >
-              ❌
-            </button>
-            <button
-              onClick={() => handleSendRequest("interested", _id)}
-              className="text-center cursor-pointer flex items-center justify-center w-16 h-16 text-3xl text-black rounded-full bg-white shadow-xl hover:scale-110 transition-transform"
-            >
-              💙
-            </button>
+          {/* Gradient overlay for text */}
+          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4 z-10">
+            <h1 className="text-2xl font-bold text-white drop-shadow-md">
+              {firstName} {lastName}
+            </h1>
+            {about && (
+              <p className="mt-1 text-xs sm:text-sm text-white drop-shadow-md line-clamp-3">
+                {about}
+              </p>
+            )}
+            {(age || gender) && (
+              <p className="mt-2 text-xs sm:text-sm text-white drop-shadow-md flex gap-2 items-center">
+                <span>🎂 {age || "N/A"}</span>
+                {gender && <span>🧑‍🤝‍🧑 {gender.toUpperCase()}</span>}
+                <span>🕓 Active few hours ago</span>
+              </p>
+            )}
           </div>
         </figure>
+
+        {/* Action buttons below the image */}
+        <div className="flex justify-center gap-8 p-4 bg-white">
+          <button
+            onClick={() => handleSendRequest("ignored", _id)}
+            className="w-14 h-14 flex items-center justify-center text-2xl bg-red-500 text-white rounded-full shadow-lg hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Reject user"
+          >
+            ❌
+          </button>
+          <button
+            onClick={() => handleSendRequest("interested", _id)}
+            className="w-14 h-14 flex items-center justify-center text-2xl bg-blue-600 text-white rounded-full shadow-lg hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Like user"
+          >
+            💙
+          </button>
+        </div>
       </div>
     </div>
   );
