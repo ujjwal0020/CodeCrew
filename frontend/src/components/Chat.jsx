@@ -5,8 +5,6 @@
 // import axios from "axios";
 // import { BASE_URL } from "../utils/constants";
 
-
-
 // const Chat = () => {
 //   const { targetUserId } = useParams();
 //   const [messages, setMessages] = useState([]);
@@ -32,7 +30,7 @@
 //         lastName: senderId?.lastName,
 //         text,
 //       };
-//     }); 
+//     });
 //     setMessages(chatMessages);
 //   };
 //   useEffect(() => {
@@ -116,7 +114,6 @@
 
 //     socketRef.current.emit("sendMessage", messageData);
 
-    
 //     setNewMessage(""); // Don't update UI manually — messageReceived will handle it
 //   };
 
@@ -194,7 +191,6 @@
 // };
 
 // export default Chat;
-
 
 // import React, { useEffect, useRef, useState } from "react";
 // import { useParams } from "react-router-dom";
@@ -396,7 +392,6 @@
 
 // export default Chat;
 
-
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -429,8 +424,8 @@ const Chat = () => {
           firstName: senderId?.firstName,
           lastName: senderId?.lastName,
           text,
-          time: msg.time || "", // add time if present
-          userId: senderId?._id, // for own message detection
+          time: msg.time || "",
+          userId: senderId?._id,
         };
       });
       setMessages(chatMessages);
@@ -527,7 +522,53 @@ const Chat = () => {
   };
 
   return (
-    // your JSX here - unchanged
+    <div className="p-4 max-w-2xl mx-auto">
+      <div className="h-[400px] overflow-y-auto border rounded p-2 mb-2 bg-white shadow">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`mb-2 flex flex-col ${
+              msg.userId === userId ? "items-end" : "items-start"
+            }`}
+          >
+            <div className="text-sm font-semibold text-gray-700">
+              {msg.firstName} {msg.lastName}
+            </div>
+            <div
+              className={`p-2 rounded max-w-xs ${
+                msg.userId === userId ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {msg.text}
+            </div>
+            <div className="text-xs text-gray-500">{msg.time}</div>
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {isTyping && (
+        <div className="text-sm text-gray-500 mb-2">
+          {typingUser} is typing...
+        </div>
+      )}
+
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={handleTyping}
+          className="flex-1 border rounded p-2"
+          placeholder="Type a message..."
+        />
+        <button
+          onClick={sendMessage}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Send
+        </button>
+      </div>
+    </div>
   );
 };
 
