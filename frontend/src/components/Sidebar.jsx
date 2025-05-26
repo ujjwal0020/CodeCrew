@@ -20,32 +20,58 @@ const Sidebar = () => {
   const SidebarLinks = () => (
     <ul className="space-y-6 text-lg font-medium p-6">
       <li>
-        <Link to="/feed" className="flex items-center gap-3 hover:text-blue-600" onClick={closeDrawer}>
+        <Link
+          to="/feed"
+          className="flex items-center gap-3 hover:text-blue-600"
+          onClick={closeDrawer}
+        >
           <TbCardsFilled /> Explore
         </Link>
       </li>
       <li>
-        <Link to="/connections" className="flex items-center gap-3 hover:text-blue-600" onClick={closeDrawer}>
+        <Link
+          to="/connections"
+          className="flex items-center gap-3 hover:text-blue-600"
+          onClick={closeDrawer}
+        >
           <FaUsers /> Connections
         </Link>
       </li>
       <li>
-        <Link to="/requests" className="flex items-center gap-3 hover:text-blue-600" onClick={closeDrawer}>
+        <Link
+          to="/requests"
+          className="flex items-center gap-3 hover:text-blue-600"
+          onClick={closeDrawer}
+        >
           <MdOutlineNotifications /> Notifications
         </Link>
       </li>
       <li>
-        <button onClick={() => { openModal(); closeDrawer(); }} className="flex items-center gap-3 hover:text-blue-600">
+        <button
+          onClick={() => {
+            openModal();
+            closeDrawer();
+          }}
+          className="flex items-center gap-3 hover:text-blue-600"
+        >
           <FaEye /> Views
         </button>
       </li>
       <li>
-        <button onClick={() => { openModal(); closeDrawer(); }} className="flex items-center gap-3 hover:text-blue-600">
+        <Link
+          to="/messages"
+          className="flex items-center gap-3 hover:text-blue-600"
+          onClick={closeDrawer}
+        >
           <AiOutlineMessage /> Messages
-        </button>
+        </Link>
       </li>
       <li>
-        <Link to="/profile" className="flex items-center gap-3 hover:text-blue-600" onClick={closeDrawer}>
+        <Link
+          to="/profile"
+          className="flex items-center gap-3 hover:text-blue-600"
+          onClick={closeDrawer}
+        >
           <FaUserEdit /> Profile
         </Link>
       </li>

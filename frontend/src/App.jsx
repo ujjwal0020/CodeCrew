@@ -10,9 +10,10 @@ import Requests from "./components/Requests";
 import Home from "./components/Home";
 import Chat from "./components/Chat";
 import Termsofuse from "./components/Termsofuse";
-import About from "./components/About";
 import Contact from "./components/Contact";
 import WhyChoose from "./components/WhyChoose";
+import About from "./components/about";
+import Messages from "./components/Messages";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/whychoose" element={<WhyChoose />} />
+              <Route path="/messages" element={<Messages />} />            
             </Route>
           </Routes>
         </BrowserRouter>

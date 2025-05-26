@@ -37,11 +37,12 @@ const NavBar = () => {
         {/* Center: Navigation Links (Desktop) */}
         <nav className="hidden md:flex gap-20 font-medium text-black">
           <Link
-            to="/"
+            to={user ? "/feed" : "/"}
             className="hover:bg-yellow-300 hover:text-black px-4 py-2 rounded-full transition"
           >
             Home
           </Link>
+
           <Link
             to="/about"
             className="hover:bg-yellow-300 hover:text-black px-4 py-2 rounded-full transition"
